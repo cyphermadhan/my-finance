@@ -833,3 +833,22 @@
 .health__details[open] .health__toggle-closed { display: none; }
 .health__details[open] .health__toggle-open { display: inline; }
 .health__details > .health__dims { margin-top: 14px; }
+
+/* --- Portfolio health: clearer color-coded dimensions --- */
+.health__dims { gap: 14px; }
+.health__dim-detail { text-align: left; margin-top: 4px; }
+.health__dim-label { font-size: 13px; }
+.health__dim-score { font-family: var(--font-numeric); font-weight: 600; font-size: 13px; }
+.health__dim-score-max { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 1px; }
+.health__dim-score--good { color: var(--positive); }
+.health__dim-score--warn { color: var(--warning); }
+.health__dim-score--bad { color: var(--negative); }
+.health__bar-fill--good { background: var(--positive); }
+.health__bar-fill--warn { background: var(--warning); }
+.health__bar-fill--bad { background: var(--negative); }
+.health__legend { font-size: 12px; color: var(--text-tertiary); margin: 0 0 12px; line-height: 1.7; }
+.health__legend b { color: var(--text-secondary); }
+.health__legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin: 0 4px 0 10px; vertical-align: middle; }
+.health__legend-dot--good { background: var(--positive); }
+.health__legend-dot--warn { background: var(--warning); }
+.health__legend-dot--bad { background: var(--negative); }

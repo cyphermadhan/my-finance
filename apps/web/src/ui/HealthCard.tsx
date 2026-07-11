@@ -46,15 +46,20 @@ export function HealthCard({ health }: { health: PortfolioHealth }) {
               <span className="health__toggle-open">Hide details</span>
             </summary>
             <div className="health__dims">
-              {health.dimensions.map((d) => (
-                <div key={d.key} className="health__dim">
-                  <div className="health__dim-head">
-                    <span>{d.label}</span>
-                    <span className="health__dim-detail">{d.detail}</span>
+              <p className="health__legend">Each factor is scored out of 100 — <b>higher is healthier</b>. <span className="health__legend-dot health__legend-dot--good" />good · <span className="health__legend-dot health__legend-dot--warn" />watch · <span className="health__legend-dot health__legend-dot--bad" />needs attention</p>
+              {health.dimensions.map((d) => {
+                const band = d.score >= 70 ? 'good' : d.score >= 40 ? 'warn' : 'bad';
+                return (
+                  <div key={d.key} className="health__dim">
+                    <div className="health__dim-head">
+                      <span className="health__dim-label">{d.label}</span>
+                      <span className={`health__dim-score health__dim-score--${band}`}>{d.score}<span className="health__dim-score-max">/100</span></span>
+                    </div>
+                    <div className="health__bar"><div className={`health__bar-fill health__bar-fill--${band}`} style={{ width: `${d.score}%` }} /></div>
+                    <div className="health__dim-detail">{d.detail}</div>
                   </div>
-                  <div className="health__bar"><div className="health__bar-fill" style={{ width: `${d.score}%` }} /></div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </details>
         </div>
