@@ -1,4 +1,4 @@
-import { Activity, CheckCircle } from 'react-feather';
+import { Activity, CheckCircle, Info } from 'react-feather';
 import type { PortfolioHealth } from '@/analytics/health';
 import { formatInrCompact } from '@/util/format';
 
@@ -10,7 +10,25 @@ export function HealthCard({ health }: { health: PortfolioHealth }) {
   return (
     <section className="card health">
       <div className="section-header">
-        <h2><Activity size={16} /> Portfolio health</h2>
+        <h2>
+          <Activity size={16} /> Portfolio health
+          <span className="info-tip" tabIndex={0} role="button" aria-label="How the health score is calculated">
+            <Info size={14} />
+            <span className="info-tip__bubble" role="tooltip">
+              <strong>How this is calculated</strong>
+              <p>The score is the average of six checks, each rated 0–100:</p>
+              <ul>
+                <li><b>Concentration</b> — largest single holding vs. total assets</li>
+                <li><b>Diversification</b> — spread across asset categories</li>
+                <li><b>Metals</b> — gold + silver share (norm ~5–10%)</li>
+                <li><b>Global</b> — US vs. Indian equity balance</li>
+                <li><b>Cash</b> — idle cash share</li>
+                <li><b>Debt</b> — liabilities vs. assets</li>
+              </ul>
+              <p>Grade: A ≥ 85, B ≥ 70, C ≥ 55, D ≥ 40, else E. General heuristics — not personalised financial advice.</p>
+            </span>
+          </span>
+        </h2>
         <span className="section-header__meta">heuristic, not financial advice</span>
       </div>
 
