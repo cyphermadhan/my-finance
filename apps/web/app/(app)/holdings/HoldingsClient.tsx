@@ -4,6 +4,12 @@ import { useState, useTransition } from 'react';
 import type { Category, FamilyMember, Holding } from '@/types';
 import { CATEGORIES, CATEGORY_LABELS } from '@/types';
 import { formatInrCompact } from '@/util/format';
+import { SegmentedControl } from '@/ui/SegmentedControl';
+
+const SCOPE_OPTIONS = [
+  { value: 'family' as const, label: 'Family' },
+  { value: 'mine' as const, label: 'Mine' },
+];
 
 type Props = {
   viewerUserId: string;
@@ -44,10 +50,7 @@ export function HoldingsClient(p: Props) {
       <section className="card">
         <div className="section-header">
           <h2>Holdings</h2>
-          <div style={{ display: 'flex', gap: 6 }}>
-            <button className={`btn ${tab === 'family' ? 'btn--primary' : ''}`} onClick={() => setTab('family')}>Family</button>
-            <button className={`btn ${tab === 'mine' ? 'btn--primary' : ''}`} onClick={() => setTab('mine')}>Mine</button>
-          </div>
+          <SegmentedControl ariaLabel="Holdings scope" value={tab} onChange={setTab} options={SCOPE_OPTIONS} />
         </div>
         {orderedCats.length === 0 ? (
           <p style={{ color: 'var(--text-secondary)' }}>No holdings yet. Import a holdings CSV or add one manually.</p>

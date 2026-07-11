@@ -4,6 +4,12 @@ import { useState, useTransition } from 'react';
 import type { Account, FamilyMember, Transaction } from '@/types';
 import { ACCOUNT_TYPE_LABELS } from '@/types';
 import { formatInrCompact } from '@/util/format';
+import { SegmentedControl } from '@/ui/SegmentedControl';
+
+const SCOPE_OPTIONS = [
+  { value: 'family' as const, label: 'Family' },
+  { value: 'mine' as const, label: 'Mine' },
+];
 
 type RecentTx = Transaction & { accountName: string; ownerUserId: string; isShared: boolean };
 
@@ -31,10 +37,7 @@ export function AccountsClient(p: Props) {
       <section className="card">
         <div className="section-header">
           <h2>Accounts</h2>
-          <div style={{ display: 'flex', gap: 6 }}>
-            <button className={`btn ${tab === 'family' ? 'btn--primary' : ''}`} onClick={() => setTab('family')}>Family</button>
-            <button className={`btn ${tab === 'mine' ? 'btn--primary' : ''}`} onClick={() => setTab('mine')}>Mine</button>
-          </div>
+          <SegmentedControl ariaLabel="Accounts scope" value={tab} onChange={setTab} options={SCOPE_OPTIONS} />
         </div>
         {filtered.length === 0 ? (
           <p style={{ color: 'var(--text-secondary)' }}>No accounts yet. Import a bank statement, or add one manually.</p>
