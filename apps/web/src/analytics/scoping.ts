@@ -21,13 +21,23 @@ export function slicesFromHoldings(holdings: Holding[], usdInr: number, weightFn
     .sort((a, b) => b.valueInr - a.valueInr);
 }
 
-/** For a personal view: shared items are counted at 1/N; owned items at 100%. */
-export function scopeHoldings(holdings: Holding[], scope: Scope, viewerUserId: string, memberCount: number): { list: Holding[]; sharedFactor: (h: Holding) => number } {
+/** Number of people a holding is split between (the shared-with set, min 1). */
+function holdingSplit(h: Holding): number {
+  return Math.max(h.sharedWith?.length ?? 1, 1);
+}
+
+/**
+ * For a personal view: a holding is included if the viewer owns it (unshared) or
+ * is in its shared-with set. Shared holdings are counted at 1/|shared-with|.
+ */
+export function scopeHoldings(holdings: Holding[], scope: Scope, viewerUserId: string): { list: Holding[]; sharedFactor: (h: Holding) => number } {
   if (scope === 'family') {
     return { list: holdings, sharedFactor: () => 1 };
   }
-  const list = holdings.filter((h) => h.ownerUserId === viewerUserId || h.isShared);
-  const sharedFactor = (h: Holding) => (h.isShared && h.ownerUserId !== viewerUserId ? 1 / Math.max(memberCount, 1) : h.isShared ? 1 / Math.max(memberCount, 1) : 1);
+  const list = holdings.filter((h) =>
+    h.isShared ? (h.sharedWith ?? []).includes(viewerUserId) : h.ownerUserId === viewerUserId
+  );
+  const sharedFactor = (h: Holding) => (h.isShared ? 1 / holdingSplit(h) : 1);
   return { list, sharedFactor };
 }
 
@@ -47,7 +57,7 @@ export function netWorthScoped(
   memberCount: number
 ): number {
   const a = scopeAccounts(accounts, scope, viewerUserId, memberCount);
-  const h = scopeHoldings(holdings, scope, viewerUserId, memberCount);
+  const h = scopeHoldings(holdings, scope, viewerUserId);
   const acctTotal = a.list.reduce((s, x) => s + toInr(x.latestBalance, x.currency, usdInr) * a.sharedFactor(x), 0);
   const holdingTotal = h.list.reduce((s, x) => s + toInr(x.latestValue, x.currency, usdInr) * h.sharedFactor(x), 0);
   return acctTotal + holdingTotal;

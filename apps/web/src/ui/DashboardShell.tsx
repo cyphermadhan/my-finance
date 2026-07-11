@@ -11,7 +11,7 @@ export function DashboardShell({ data }: Props) {
   const { scope, viewerUserId, familyMembers, memberCount, accounts, holdings, historicalNetWorth, latestFx } = data;
   const nw = netWorthScoped(accounts, holdings, latestFx.usdInr, scope, viewerUserId, memberCount);
 
-  const holdingScope = scopeHoldings(holdings, scope, viewerUserId, memberCount);
+  const holdingScope = scopeHoldings(holdings, scope, viewerUserId);
   const slices = slicesFromHoldings(holdingScope.list, latestFx.usdInr, holdingScope.sharedFactor);
 
   const acctScope = scopeAccounts(accounts, scope, viewerUserId, memberCount);

@@ -14,9 +14,10 @@ type UpsertHoldingInput = {
   name: string;
   currency: Currency;
   quantity?: number | null;
-  ticker?: string | null;
   notes?: string | null;
   isShared: boolean;
+  /** Member userIds the holding is shared with (owner is auto-included). Ignored when isShared is false. */
+  sharedWith?: string[];
   ownerUserId: string;
   value: number; // as-of today
 };
@@ -26,6 +27,8 @@ export async function upsertHolding(input: UpsertHoldingInput) {
   if (!db) throw new Error('DB unavailable');
   await ensureTodaySnapshot(session.user.familyId, session.user.id);
 
+  const qty = input.quantity !== null && input.quantity !== undefined ? String(input.quantity) : null;
+
   let holdingId = input.id;
   if (holdingId) {
     await db
@@ -34,8 +37,7 @@ export async function upsertHolding(input: UpsertHoldingInput) {
         category: input.category,
         name: input.name,
         currency: input.currency,
-        quantity: input.quantity !== null && input.quantity !== undefined ? String(input.quantity) : null,
-        ticker: input.ticker ?? null,
+        quantity: qty,
         notes: input.notes ?? null,
         isShared: input.isShared,
         ownerUserId: input.ownerUserId,
@@ -51,12 +53,19 @@ export async function upsertHolding(input: UpsertHoldingInput) {
         category: input.category,
         name: input.name,
         currency: input.currency,
-        quantity: input.quantity !== null && input.quantity !== undefined ? String(input.quantity) : null,
-        ticker: input.ticker ?? null,
+        quantity: qty,
         notes: input.notes ?? null,
       })
       .returning();
     holdingId = row.id;
+  }
+
+  // Replace the shared-with set. Owner is always part of the sharing set when shared.
+  await db.delete(schema.holdingSharedWith).where(eq(schema.holdingSharedWith.holdingId, holdingId));
+  if (input.isShared) {
+    const members = new Set<string>(input.sharedWith ?? []);
+    members.add(input.ownerUserId);
+    await db.insert(schema.holdingSharedWith).values([...members].map((userId) => ({ holdingId: holdingId!, userId })));
   }
 
   // Upsert today's holding_value

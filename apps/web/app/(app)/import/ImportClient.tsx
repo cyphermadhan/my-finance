@@ -83,7 +83,7 @@ export function ImportClient({ importTransactions, importHoldings }: Props) {
                 {parsed.kind === 'transactions' ? (
                   <tr><th>Date</th><th>Account</th><th>Description</th><th className="table__num">Amount</th><th>Category</th></tr>
                 ) : (
-                  <tr><th>Date</th><th>Owner</th><th>Category</th><th>Name</th><th className="table__num">Value</th><th>Shared</th></tr>
+                  <tr><th>Date</th><th>Category</th><th>Name</th><th className="table__num">Value</th><th>Shared</th></tr>
                 )}
               </thead>
               <tbody>
@@ -102,7 +102,6 @@ export function ImportClient({ importTransactions, importHoldings }: Props) {
                   : parsed.rows.slice(0, 200).map((r, i) => (
                       <tr key={i}>
                         <td>{r.date}</td>
-                        <td>{r.owner_email}</td>
                         <td>{r.category}</td>
                         <td>{r.name}</td>
                         <td className="table__num">{formatInrCompact(r.currency === 'USD' ? r.value * 83.5 : r.value)}</td>

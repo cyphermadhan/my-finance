@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
@@ -18,12 +19,28 @@ type Props = { user: { name: string; email: string; image: string | null } };
 
 export function Nav({ user }: Props) {
   const path = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <nav className="nav">
       <div className="nav__brand">Wealth</div>
-      <div className="nav__links">
+      <button
+        className="nav__toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((o) => !o)}
+      >
+        ☰
+      </button>
+      <div className={`nav__links ${menuOpen ? 'nav__links--open' : ''}`}>
         {links.map((l) => (
-          <Link key={l.href} href={l.href} className={`nav__link ${path.startsWith(l.href) ? 'nav__link--active' : ''}`}>{l.label}</Link>
+          <Link
+            key={l.href}
+            href={l.href}
+            className={`nav__link ${path.startsWith(l.href) ? 'nav__link--active' : ''}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            {l.label}
+          </Link>
         ))}
       </div>
       <div className="nav__user">

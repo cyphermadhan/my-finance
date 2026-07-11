@@ -97,6 +97,18 @@ export async function getHoldingsWithLatestValue(familyId: string): Promise<Hold
   const vmap = new Map<string, { value: number; date: string }>();
   for (const r of values.rows) vmap.set(r.holding_id, { value: toNum(r.value), date: r.date });
 
+  // Load the shared-with set per holding.
+  const sharedRows = await db
+    .select({ holdingId: schema.holdingSharedWith.holdingId, userId: schema.holdingSharedWith.userId })
+    .from(schema.holdingSharedWith)
+    .where(inArray(schema.holdingSharedWith.holdingId, rows.map((r) => r.id)));
+  const sharedMap = new Map<string, string[]>();
+  for (const r of sharedRows) {
+    const list = sharedMap.get(r.holdingId) ?? [];
+    list.push(r.userId);
+    sharedMap.set(r.holdingId, list);
+  }
+
   return rows.map((r) => ({
     id: r.id,
     familyId: r.familyId,
@@ -104,10 +116,10 @@ export async function getHoldingsWithLatestValue(familyId: string): Promise<Hold
     isShared: r.isShared,
     category: r.category,
     name: r.name,
-    ticker: r.ticker,
     quantity: r.quantity !== null ? toNum(r.quantity) : null,
     currency: r.currency,
     notes: r.notes,
+    sharedWith: sharedMap.get(r.id) ?? [],
     latestValue: vmap.get(r.id)?.value ?? 0,
     latestValueDate: vmap.get(r.id)?.date ?? null,
   }));

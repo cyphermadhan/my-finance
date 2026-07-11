@@ -113,25 +113,17 @@ export async function importHoldings(rows: HoldingRow[]): Promise<{ ok: true; su
   if (!db) return { ok: false, error: 'DB unavailable' };
   const familyId = session.user.familyId;
 
-  // Resolve owner_email → userId (must be family member)
+  // All imported holdings belong to the importer.
+  const ownerUserId = session.user.id;
   const memberRows = await db
-    .select({ userId: schema.familyMember.userId, email: schema.users.email })
+    .select({ userId: schema.familyMember.userId })
     .from(schema.familyMember)
-    .innerJoin(schema.users, eq(schema.familyMember.userId, schema.users.id))
     .where(eq(schema.familyMember.familyId, familyId));
-  const emailToUser = new Map(memberRows.map((r) => [r.email.toLowerCase(), r.userId]));
+  const allMemberIds = memberRows.map((r) => r.userId);
 
-  const unknownEmails = new Set<string>();
-  for (const r of rows) {
-    if (!emailToUser.has(r.owner_email.toLowerCase())) unknownEmails.add(r.owner_email);
-  }
-  if (unknownEmails.size) {
-    return { ok: false, error: `Unknown owner emails (not in family): ${[...unknownEmails].join(', ')}` };
-  }
-
-  // Group rows into a holding identity: (owner, category, name, ticker). All rows for that holding
+  // Group rows into a holding identity: (category, name). All rows for that holding
   // share one holding row; each date/value becomes a holding_value row.
-  const groupKey = (r: HoldingRow) => `${emailToUser.get(r.owner_email.toLowerCase())}::${r.category}::${r.name}::${r.ticker ?? ''}`;
+  const groupKey = (r: HoldingRow) => `${r.category}::${r.name}`;
   const groups = new Map<string, { sample: HoldingRow; entries: HoldingRow[] }>();
   for (const r of rows) {
     const k = groupKey(r);
@@ -139,9 +131,11 @@ export async function importHoldings(rows: HoldingRow[]): Promise<{ ok: true; su
     groups.get(k)!.entries.push(r);
   }
 
-  // Find existing holdings matching these identities so we can upsert.
+  // Find the importer's existing holdings so we can upsert instead of duplicating.
   const existing = await db.select().from(schema.holding).where(eq(schema.holding.familyId, familyId));
-  const existingByKey = new Map(existing.map((h) => [`${h.ownerUserId}::${h.category}::${h.name}::${h.ticker ?? ''}`, h]));
+  const existingByKey = new Map(
+    existing.filter((h) => h.ownerUserId === ownerUserId).map((h) => [`${h.category}::${h.name}`, h])
+  );
 
   let inserted = 0;
   let valuesInserted = 0;
@@ -150,17 +144,20 @@ export async function importHoldings(rows: HoldingRow[]): Promise<{ ok: true; su
     if (!holdingId) {
       const [row] = await db.insert(schema.holding).values({
         familyId,
-        ownerUserId: emailToUser.get(sample.owner_email.toLowerCase())!,
+        ownerUserId,
         isShared: sample.is_shared,
         category: sample.category,
         name: sample.name,
         currency: sample.currency,
         quantity: sample.quantity !== undefined ? String(sample.quantity) : null,
-        ticker: sample.ticker ?? null,
         notes: sample.notes ?? null,
       }).returning();
       holdingId = row.id;
       inserted++;
+      // Imported shared holdings default to shared with the whole family (refine in the UI).
+      if (sample.is_shared && allMemberIds.length) {
+        await db.insert(schema.holdingSharedWith).values(allMemberIds.map((userId) => ({ holdingId: holdingId!, userId })));
+      }
     }
     // ensure a snapshot per date exists at family level
     for (const e of entries) {

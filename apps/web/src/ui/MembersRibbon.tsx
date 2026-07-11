@@ -22,8 +22,12 @@ export function MembersRibbon({ members, accounts, holdings, usdInr }: Props) {
   }
   for (const h of holdings) {
     const inr = toInr(h.latestValue, h.currency);
-    if (h.isShared) for (const m of members) byMember[m.userId] += inr / n;
-    else byMember[h.ownerUserId] = (byMember[h.ownerUserId] ?? 0) + inr;
+    if (h.isShared && h.sharedWith && h.sharedWith.length) {
+      const share = inr / h.sharedWith.length;
+      for (const uid of h.sharedWith) byMember[uid] = (byMember[uid] ?? 0) + share;
+    } else {
+      byMember[h.ownerUserId] = (byMember[h.ownerUserId] ?? 0) + inr;
+    }
   }
   const familyTotal = Object.values(byMember).reduce((s, v) => s + v, 0);
 

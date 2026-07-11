@@ -40,7 +40,10 @@ export function AccountsClient(p: Props) {
           <SegmentedControl ariaLabel="Accounts scope" value={tab} onChange={setTab} options={SCOPE_OPTIONS} />
         </div>
         {filtered.length === 0 ? (
-          <p style={{ color: 'var(--text-secondary)' }}>No accounts yet. Import a bank statement, or add one manually.</p>
+          <div style={{ color: 'var(--text-secondary)' }}>
+            <p>No accounts yet. Import a bank statement to create them automatically.</p>
+            <a className="btn" href="/import" style={{ marginTop: 8, display: 'inline-block' }}>Import statement</a>
+          </div>
         ) : (
           <table className="table">
             <thead>

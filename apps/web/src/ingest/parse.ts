@@ -22,10 +22,8 @@ export type HoldingRow = {
   currency: Currency;
   value: number;
   quantity?: number;
-  ticker?: string;
   notes?: string;
   is_shared: boolean;
-  owner_email: string;
 };
 
 export type ParseResult<T> = { ok: true; rows: T[]; skipped: number } | { ok: false; error: string };
@@ -130,12 +128,9 @@ function parseHoldings(records: Record<string, string>[]): ParseResult<HoldingRo
     if (Number.isNaN(value)) return { ok: false, error: `Row ${i + 2}: value is not a number.` };
     const quantity = r.quantity ? num(r.quantity) : undefined;
     if (quantity !== undefined && Number.isNaN(quantity)) return { ok: false, error: `Row ${i + 2}: quantity is not a number.` };
-    const ticker = r.ticker?.trim() || undefined;
     const notes = r.notes?.trim() || undefined;
     const isShared = ['true', '1', 'yes'].includes((r.is_shared ?? 'false').toLowerCase());
-    const owner_email = (r.owner_email ?? '').trim();
-    if (!owner_email) return { ok: false, error: `Row ${i + 2}: owner_email required.` };
-    rows.push({ date, category, name, currency, value, quantity, ticker, notes, is_shared: isShared, owner_email });
+    rows.push({ date, category, name, currency, value, quantity, notes, is_shared: isShared });
   }
   return { ok: true, rows, skipped };
 }

@@ -18,6 +18,28 @@ export const CATEGORIES = [
 
 export type Category = (typeof CATEGORIES)[number];
 
+/**
+ * Quantity unit per category. `null` means the category has no meaningful
+ * quantity (value-only) — the UI hides the quantity field for those.
+ */
+export const CATEGORY_UNITS: Record<Category, string | null> = {
+  cash: null,
+  fd_rd: null,
+  ppf: null,
+  epf: null,
+  nps: null,
+  mutual_funds: 'units',
+  indian_stocks: 'shares',
+  us_stocks: 'shares',
+  bonds: 'units',
+  gold: 'grams',
+  silver: 'grams',
+  crypto: 'coins',
+  real_estate: 'acres',
+  custom: null,
+  liability: null,
+};
+
 export const CATEGORY_LABELS: Record<Category, string> = {
   cash: 'Cash',
   fd_rd: 'FD / RD',
@@ -59,8 +81,9 @@ export type Holding = {
   name: string;
   currency: Currency;
   quantity?: number | null;
-  ticker?: string | null;
   notes?: string | null;
+  /** Member userIds this holding is shared with (includes owner). Empty when not shared. */
+  sharedWith?: string[];
   /** latest known value; kept denormalised for quick reads */
   latestValue: number;
   latestValueDate?: string | null;

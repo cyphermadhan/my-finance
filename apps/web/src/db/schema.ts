@@ -123,7 +123,6 @@ export const holding = pgTable(
     isShared: boolean('is_shared').default(false).notNull(),
     category: categoryEnum('category').notNull(),
     name: text('name').notNull(),
-    ticker: text('ticker'),
     quantity: numeric('quantity', { precision: 20, scale: 8 }),
     currency: currencyEnum('currency').notNull().default('INR'),
     notes: text('notes'),
@@ -132,6 +131,19 @@ export const holding = pgTable(
   },
   (t) => ({
     familyIdx: index('holding_family_idx').on(t.familyId),
+  })
+);
+
+// Which family members a holding is shared with (includes the owner). Empty for unshared.
+export const holdingSharedWith = pgTable(
+  'holding_shared_with',
+  {
+    holdingId: uuid('holding_id').notNull().references(() => holding.id, { onDelete: 'cascade' }),
+    userId: uuid('user_id').notNull().references(() => users.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.holdingId, t.userId] }),
+    userIdx: index('holding_shared_with_user_idx').on(t.userId),
   })
 );
 
