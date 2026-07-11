@@ -4,12 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-import { Users, User, CreditCard, Briefcase, Target, Upload, Settings, Menu, LogOut } from 'react-feather';
+import { Users, User, Briefcase, Target, Upload, Settings, Menu, LogOut } from 'react-feather';
 
 const links = [
   { href: '/family', label: 'Family', Icon: Users },
   { href: '/personal', label: 'Personal', Icon: User },
-  { href: '/accounts', label: 'Accounts', Icon: CreditCard },
   { href: '/holdings', label: 'Holdings', Icon: Briefcase },
   { href: '/goals', label: 'Goals', Icon: Target },
   { href: '/import', label: 'Import', Icon: Upload },
