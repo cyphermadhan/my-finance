@@ -745,3 +745,32 @@
   .holding-form__fields { flex-direction: column; align-items: stretch; }
   .holding-form__fields .input, .holding-form__fields .select { width: 100%; }
 }
+
+/* --- Portfolio health card --- */
+.health__top { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+.health__score {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-width: 130px; padding: 16px 20px; border-radius: var(--radius-lg);
+  background: var(--bg-surface-alt); border: 1px solid var(--border);
+}
+.health__score-num { font-family: var(--font-numeric); font-size: 46px; font-weight: 700; line-height: 1; }
+.health__score-grade { font-size: 12px; color: var(--text-secondary); margin-top: 6px; text-align: center; }
+.health__score--a .health__score-num, .health__score--b .health__score-num { color: var(--positive); }
+.health__score--c .health__score-num { color: var(--warning); }
+.health__score--d .health__score-num, .health__score--e .health__score-num { color: var(--negative); }
+.health__dims { flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 10px; }
+.health__dim-head { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; margin-bottom: 4px; }
+.health__dim-detail { color: var(--text-tertiary); font-size: 12px; text-align: right; }
+.health__bar { height: 6px; background: var(--bg-hover); border-radius: 999px; overflow: hidden; }
+.health__bar-fill { height: 100%; background: var(--accent); border-radius: 999px; }
+.health__subhead {
+  font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-secondary); margin: 18px 0 10px;
+}
+.health__goal { margin-bottom: 10px; }
+.health__recs ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.health__recs li { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); }
+.health__recs li svg { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+@media (max-width: 640px) {
+  .health__score { min-width: 0; width: 100%; }
+}

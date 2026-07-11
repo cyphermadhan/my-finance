@@ -4,13 +4,16 @@ import { Hero } from './Hero';
 import { NetWorthChart } from './NetWorthChart';
 import { AllocationChart } from './AllocationChart';
 import { MembersRibbon } from './MembersRibbon';
+import { HealthCard } from './HealthCard';
 import { netWorthScoped, scopeAccounts, scopeHoldings, slicesFromHoldings } from '@/analytics/scoping';
+import { portfolioHealth } from '@/analytics/health';
 
 type Props = { data: DashboardData };
 
 export function DashboardShell({ data }: Props) {
-  const { scope, viewerUserId, familyMembers, memberCount, accounts, holdings, historicalNetWorth, latestFx } = data;
+  const { scope, viewerUserId, familyMembers, memberCount, accounts, holdings, goals, historicalNetWorth, latestFx } = data;
   const nw = netWorthScoped(accounts, holdings, latestFx.usdInr, scope, viewerUserId, memberCount);
+  const health = scope === 'family' ? portfolioHealth(holdings, goals, latestFx.usdInr) : null;
 
   const holdingScope = scopeHoldings(holdings, scope, viewerUserId);
   const slices = slicesFromHoldings(holdingScope.list, latestFx.usdInr, holdingScope.sharedFactor);
@@ -31,6 +34,8 @@ export function DashboardShell({ data }: Props) {
     <div className="app">
       <Hero label={label} value={nw} />
       <NetWorthChart data={historicalScoped} title={scope === 'family' ? 'Family net worth over time' : 'My net worth over time'} />
+
+      {scope === 'family' && health && <HealthCard health={health} />}
 
       {scope === 'family' && (
         <MembersRibbon members={familyMembers} accounts={accounts} holdings={holdings} usdInr={latestFx.usdInr} />
