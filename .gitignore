@@ -1,0 +1,25 @@
+node_modules
+.DS_Store
+*.log
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Next.js
+.next
+out
+apps/web/.next
+apps/web/out
+
+# Legacy v1
+dist
+apps/web/dist
+
+# Cloudflare
+.wrangler
+apps/proxy/.wrangler
+
+# Drizzle temp
+drizzle/meta/_journal.json.bak

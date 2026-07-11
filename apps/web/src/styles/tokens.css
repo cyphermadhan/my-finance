@@ -1,0 +1,99 @@
+:root {
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", system-ui, sans-serif;
+  --font-numeric: "SF Mono", "Menlo", "Roboto Mono", ui-monospace, monospace;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-base: #f7f7f5;
+    --bg-surface: #ffffff;
+    --bg-surface-alt: #fafaf8;
+    --bg-hover: #f0f0ee;
+    --border: #e6e6e2;
+    --border-strong: #d5d5cf;
+    --text-primary: #14140f;
+    --text-secondary: #55554d;
+    --text-tertiary: #85857c;
+    --accent: #2e7d32;
+    --accent-fg: #ffffff;
+    --positive: #1e8a3a;
+    --negative: #c53030;
+    --warning: #b45309;
+    --category-cash: #4c6ef5;
+    --category-fd_rd: #7048e8;
+    --category-ppf: #9333ea;
+    --category-epf: #a855f7;
+    --category-nps: #c026d3;
+    --category-mutual_funds: #0891b2;
+    --category-indian_stocks: #059669;
+    --category-us_stocks: #16a34a;
+    --category-bonds: #b45309;
+    --category-gold: #d97706;
+    --category-silver: #78716c;
+    --category-crypto: #f97316;
+    --category-real_estate: #dc2626;
+    --category-custom: #6b7280;
+    --category-liability: #ef4444;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-base: #0e0e0c;
+    --bg-surface: #17171466;
+    --bg-surface-alt: #1c1c1a;
+    --bg-hover: #232320;
+    --border: #2b2b28;
+    --border-strong: #3a3a36;
+    --text-primary: #eeeee8;
+    --text-secondary: #adada4;
+    --text-tertiary: #7a7a71;
+    --accent: #6ee7b7;
+    --accent-fg: #0e0e0c;
+    --positive: #6ee7b7;
+    --negative: #fca5a5;
+    --warning: #fcd34d;
+    --category-cash: #6b8afd;
+    --category-fd_rd: #9575ff;
+    --category-ppf: #b579ff;
+    --category-epf: #c98cfd;
+    --category-nps: #e084ff;
+    --category-mutual_funds: #38bdf8;
+    --category-indian_stocks: #34d399;
+    --category-us_stocks: #4ade80;
+    --category-bonds: #fbbf24;
+    --category-gold: #f59e0b;
+    --category-silver: #a8a29e;
+    --category-crypto: #fb923c;
+    --category-real_estate: #f87171;
+    --category-custom: #9ca3af;
+    --category-liability: #f87171;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+input { font-family: inherit; }

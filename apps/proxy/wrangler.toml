@@ -1,0 +1,9 @@
+name = "my-finance-proxy"
+main = "src/index.ts"
+compatibility_date = "2024-06-01"
+
+# Set with: wrangler secret put PROXY_TOKEN
+# Optional: wrangler secret put METALS_API_KEY
+
+[vars]
+ALLOWED_ORIGIN = "*"

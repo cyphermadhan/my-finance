@@ -1,0 +1,64 @@
+date,category,name,currency,value,quantity,ticker,notes,fx_usd_inr
+2026-02-01,cash,HDFC Savings,INR,420000,,,,83.4
+2026-02-01,cash,ICICI Salary,INR,150000,,,,83.4
+2026-02-01,fd_rd,HDFC FD (5.5%),INR,500000,,,,83.4
+2026-02-01,ppf,PPF (SBI),INR,600000,,,,83.4
+2026-02-01,epf,EPFO,INR,860000,,,,83.4
+2026-02-01,nps,NPS Tier 1,INR,320000,,,,83.4
+2026-02-01,mutual_funds,Parag Parikh Flexi Cap,INR,450000,,122639,,83.4
+2026-02-01,mutual_funds,Axis Bluechip,INR,250000,,120503,,83.4
+2026-02-01,indian_stocks,Reliance,INR,140000,50,RELIANCE.NS,,83.4
+2026-02-01,indian_stocks,Infosys,INR,90000,60,INFY.NS,,83.4
+2026-02-01,us_stocks,AAPL,USD,3200,15,AAPL,,83.4
+2026-02-01,us_stocks,VOO,USD,5000,10,VOO,,83.4
+2026-02-01,bonds,GOI 7.35% 2030,INR,200000,,,,83.4
+2026-02-01,gold,SGB Tranche VIII,INR,230000,40,,,83.4
+2026-02-01,silver,Physical silver,INR,65000,900,,,83.4
+2026-02-01,crypto,Bitcoin,INR,200000,0.05,bitcoin,,83.4
+2026-02-01,crypto,Ethereum,INR,120000,0.6,ethereum,,83.4
+2026-02-01,real_estate,Apartment (est.),INR,9200000,,,,83.4
+2026-02-01,custom,Angel investment,INR,150000,,,Early stage,83.4
+2026-02-01,liability,Home loan,INR,-4300000,,,,83.4
+2026-02-01,liability,Credit card,INR,-15000,,,,83.4
+2026-05-01,cash,HDFC Savings,INR,450000,,,,83.5
+2026-05-01,cash,ICICI Salary,INR,180000,,,,83.5
+2026-05-01,fd_rd,HDFC FD (5.5%),INR,510000,,,,83.5
+2026-05-01,ppf,PPF (SBI),INR,620000,,,,83.5
+2026-05-01,epf,EPFO,INR,890000,,,,83.5
+2026-05-01,nps,NPS Tier 1,INR,340000,,,,83.5
+2026-05-01,mutual_funds,Parag Parikh Flexi Cap,INR,480000,,122639,,83.5
+2026-05-01,mutual_funds,Axis Bluechip,INR,260000,,120503,,83.5
+2026-05-01,indian_stocks,Reliance,INR,148000,50,RELIANCE.NS,,83.5
+2026-05-01,indian_stocks,Infosys,INR,94000,60,INFY.NS,,83.5
+2026-05-01,us_stocks,AAPL,USD,3400,15,AAPL,,83.5
+2026-05-01,us_stocks,VOO,USD,5200,10,VOO,,83.5
+2026-05-01,bonds,GOI 7.35% 2030,INR,203000,,,,83.5
+2026-05-01,gold,SGB Tranche VIII,INR,244000,40,,,83.5
+2026-05-01,silver,Physical silver,INR,69000,900,,,83.5
+2026-05-01,crypto,Bitcoin,INR,215000,0.05,bitcoin,,83.5
+2026-05-01,crypto,Ethereum,INR,130000,0.6,ethereum,,83.5
+2026-05-01,real_estate,Apartment (est.),INR,9500000,,,,83.5
+2026-05-01,custom,Angel investment,INR,150000,,,Early stage,83.5
+2026-05-01,liability,Home loan,INR,-4180000,,,,83.5
+2026-05-01,liability,Credit card,INR,-12000,,,,83.5
+2026-07-04,cash,HDFC Savings,INR,468000,,,,83.6
+2026-07-04,cash,ICICI Salary,INR,192000,,,,83.6
+2026-07-04,fd_rd,HDFC FD (5.5%),INR,515000,,,,83.6
+2026-07-04,ppf,PPF (SBI),INR,632000,,,,83.6
+2026-07-04,epf,EPFO,INR,908000,,,,83.6
+2026-07-04,nps,NPS Tier 1,INR,352000,,,,83.6
+2026-07-04,mutual_funds,Parag Parikh Flexi Cap,INR,495000,,122639,,83.6
+2026-07-04,mutual_funds,Axis Bluechip,INR,268000,,120503,,83.6
+2026-07-04,indian_stocks,Reliance,INR,152000,50,RELIANCE.NS,,83.6
+2026-07-04,indian_stocks,Infosys,INR,97000,60,INFY.NS,,83.6
+2026-07-04,us_stocks,AAPL,USD,3500,15,AAPL,,83.6
+2026-07-04,us_stocks,VOO,USD,5350,10,VOO,,83.6
+2026-07-04,bonds,GOI 7.35% 2030,INR,205000,,,,83.6
+2026-07-04,gold,SGB Tranche VIII,INR,252000,40,,,83.6
+2026-07-04,silver,Physical silver,INR,72000,900,,,83.6
+2026-07-04,crypto,Bitcoin,INR,235000,0.05,bitcoin,,83.6
+2026-07-04,crypto,Ethereum,INR,138000,0.6,ethereum,,83.6
+2026-07-04,real_estate,Apartment (est.),INR,9600000,,,,83.6
+2026-07-04,custom,Angel investment,INR,150000,,,Early stage,83.6
+2026-07-04,liability,Home loan,INR,-4100000,,,,83.6
+2026-07-04,liability,Credit card,INR,-9000,,,,83.6
