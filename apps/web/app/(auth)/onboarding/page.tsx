@@ -9,7 +9,7 @@ export default async function OnboardingPage() {
   return (
     <main className="auth-shell">
       <div className="auth-card">
-        <div className="auth-brand">My Finance</div>
+        <div className="auth-brand">Wealth</div>
         <h1>Set up your family</h1>
         <p>Create a new family workspace, or join one someone else created with the invite code they gave you.</p>
         <OnboardingForm create={createFamily} join={joinFamily} />

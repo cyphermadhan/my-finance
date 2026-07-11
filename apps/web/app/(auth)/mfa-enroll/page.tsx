@@ -19,7 +19,7 @@ export default async function MfaEnrollPage() {
   return (
     <main className="auth-shell">
       <div className="auth-card">
-        <div className="auth-brand">My Finance · Setup</div>
+        <div className="auth-brand">Wealth · Setup</div>
         <h1>Enable two-factor</h1>
         <p>
           Scan the QR code with Google Authenticator (or 1Password / Authy). Then enter the 6-digit code shown in the app to confirm.

@@ -11,7 +11,7 @@ export default async function MfaChallengePage() {
   return (
     <main className="auth-shell">
       <div className="auth-card">
-        <div className="auth-brand">My Finance</div>
+        <div className="auth-brand">Wealth</div>
         <h1>Two-factor code</h1>
         <p>Enter the 6-digit code from your authenticator app, or a backup code.</p>
         <ChallengeForm verify={verifyMfaChallenge} />

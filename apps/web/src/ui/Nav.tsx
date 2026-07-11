@@ -20,7 +20,7 @@ export function Nav({ user }: Props) {
   const path = usePathname();
   return (
     <nav className="nav">
-      <div className="nav__brand">My Finance</div>
+      <div className="nav__brand">Wealth</div>
       <div className="nav__links">
         {links.map((l) => (
           <Link key={l.href} href={l.href} className={`nav__link ${path.startsWith(l.href) ? 'nav__link--active' : ''}`}>{l.label}</Link>

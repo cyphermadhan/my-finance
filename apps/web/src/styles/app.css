@@ -30,19 +30,63 @@
   padding: 6px 12px;
   border-radius: var(--radius-md);
   font-size: 13px;
-  transition: background 120ms ease;
+  transition: background 120ms ease, border-color 120ms ease;
 }
-.btn:hover { background: var(--bg-hover); }
+/* Only the default (non-primary/non-danger) button uses the surface hover. */
+.btn:not(.btn--primary):not(.btn--danger):hover { background: var(--bg-hover); }
 .btn--primary {
   background: var(--accent);
   color: var(--accent-fg);
   border-color: var(--accent);
 }
+.btn--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
 .btn--danger {
   color: var(--negative);
   border-color: var(--border-strong);
 }
+.btn--danger:hover:not(:disabled) { background: var(--bg-hover); border-color: var(--negative); }
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Segmented control (accessible toggle between mutually-exclusive options). */
+.segmented {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.segmented__option {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+.segmented__option:hover:not(.is-selected) {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+.segmented__option.is-selected {
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+.segmented__option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 .card {
   background: var(--bg-surface);

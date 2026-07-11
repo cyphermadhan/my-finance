@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm';
 
 authenticator.options = { window: 1, step: 30 };
 
-const ISSUER = 'My Finance';
+const ISSUER = 'Wealth';
 
 export function generateSecret(): string {
   return authenticator.generateSecret();

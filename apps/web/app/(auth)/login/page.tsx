@@ -13,7 +13,7 @@ export default async function LoginPage() {
   return (
     <main className="auth-shell">
       <div className="auth-card">
-        <div className="auth-brand">My Finance</div>
+        <div className="auth-brand">Wealth</div>
         <h1>Sign in</h1>
         <p>Family wealth dashboard. Sign in with the Google account tied to your household.</p>
         <form action={signInGoogle}>

@@ -3,7 +3,7 @@ import '../src/styles/app.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'My Finance',
+  title: 'Wealth',
   description: 'Family wealth dashboard',
 };
 

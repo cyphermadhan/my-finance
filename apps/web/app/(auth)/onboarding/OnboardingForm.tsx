@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { SegmentedControl } from '@/ui/SegmentedControl';
 
 type Props = {
   create: (name: string) => Promise<{ ok: true; familyId: string } | { ok: false; error: string }>;
@@ -27,10 +28,15 @@ export function OnboardingForm({ create, join }: Props) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div style={{ display: 'flex', gap: 6 }}>
-        <button className={`btn ${tab === 'create' ? 'btn--primary' : ''}`} onClick={() => setTab('create')}>Create</button>
-        <button className={`btn ${tab === 'join' ? 'btn--primary' : ''}`} onClick={() => setTab('join')}>Join with code</button>
-      </div>
+      <SegmentedControl
+        ariaLabel="Create or join a family"
+        value={tab}
+        onChange={setTab}
+        options={[
+          { value: 'create', label: 'Create' },
+          { value: 'join', label: 'Join with code' },
+        ]}
+      />
 
       {tab === 'create' ? (
         <form

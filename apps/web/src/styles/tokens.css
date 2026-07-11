@@ -27,6 +27,7 @@
     --text-secondary: #55554d;
     --text-tertiary: #85857c;
     --accent: #2e7d32;
+    --accent-hover: #256a29;
     --accent-fg: #ffffff;
     --positive: #1e8a3a;
     --negative: #c53030;
@@ -61,6 +62,7 @@
     --text-secondary: #adada4;
     --text-tertiary: #7a7a71;
     --accent: #6ee7b7;
+    --accent-hover: #52d9a1;
     --accent-fg: #0e0e0c;
     --positive: #6ee7b7;
     --negative: #fca5a5;
