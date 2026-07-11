@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { CreditCard, Activity, Upload, Plus, Trash2, Check, X } from 'react-feather';
 import type { Account, FamilyMember, Transaction } from '@/types';
 import { ACCOUNT_TYPE_LABELS } from '@/types';
 import { formatInrCompact } from '@/util/format';
@@ -36,16 +37,16 @@ export function AccountsClient(p: Props) {
     <div className="app">
       <section className="card">
         <div className="section-header">
-          <h2>Accounts</h2>
+          <h2><CreditCard size={16} /> Accounts</h2>
           <SegmentedControl ariaLabel="Accounts scope" value={tab} onChange={setTab} options={SCOPE_OPTIONS} />
         </div>
         {filtered.length === 0 ? (
           <div style={{ color: 'var(--text-secondary)' }}>
             <p>No accounts yet. Import a bank statement to create them automatically.</p>
-            <a className="btn" href="/import" style={{ marginTop: 8, display: 'inline-block' }}>Import statement</a>
+            <a className="btn" href="/import" style={{ marginTop: 8 }}><Upload size={15} /> Import statement</a>
           </div>
         ) : (
-          <table className="table">
+          <div className="table-wrap"><table className="table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -76,15 +77,15 @@ export function AccountsClient(p: Props) {
                     />
                   </td>
                   <td className="table__actions">
-                    <button className="icon-btn" onClick={() => start(() => p.deleteAccount(a.id).then(() => {}))}>✕</button>
+                    <button className="icon-btn" aria-label="Delete account" onClick={() => { if (confirm(`Delete "${a.name}"?`)) start(() => p.deleteAccount(a.id).then(() => {})); }}><Trash2 size={15} /></button>
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         )}
         <div style={{ marginTop: 12 }}>
-          <button className="btn" onClick={() => setAdding(true)} disabled={adding}>+ Add account</button>
+          <button className="btn" onClick={() => setAdding(true)} disabled={adding}><Plus size={15} /> Add account</button>
         </div>
         {adding && (
           <NewAccount
@@ -100,11 +101,11 @@ export function AccountsClient(p: Props) {
       </section>
 
       <section className="card">
-        <div className="section-header"><h2>Recent transactions</h2></div>
+        <div className="section-header"><h2><Activity size={16} /> Recent transactions</h2></div>
         {p.recent.length === 0 ? (
           <p style={{ color: 'var(--text-secondary)' }}>No transactions yet.</p>
         ) : (
-          <table className="table">
+          <div className="table-wrap"><table className="table">
             <thead>
               <tr>
                 <th>Date</th>
@@ -124,12 +125,12 @@ export function AccountsClient(p: Props) {
                   <td>{t.category ?? '—'}</td>
                   <td className="table__num" style={{ color: t.amount >= 0 ? 'var(--positive)' : 'var(--negative)' }}>{formatInrCompact(t.amount)}</td>
                   <td className="table__actions">
-                    <button className="icon-btn" onClick={() => start(() => p.deleteTransaction(t.id).then(() => {}))}>✕</button>
+                    <button className="icon-btn" aria-label="Delete transaction" onClick={() => start(() => p.deleteTransaction(t.id).then(() => {}))}><Trash2 size={15} /></button>
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         )}
       </section>
     </div>
@@ -180,8 +181,8 @@ function NewAccount({
       </label>
       <input className="input" type="number" placeholder="Opening balance" value={balance} onChange={(e) => setBalance(Number(e.target.value))} style={{ width: 140 }} />
       <div style={{ display: 'flex', gap: 6, marginLeft: 'auto' }}>
-        <button className="btn btn--primary" onClick={() => onSave({ name, institution, type, currency, ownerUserId, isShared, openingBalance: balance })} disabled={!name.trim() || !institution.trim()}>Save</button>
-        <button className="btn" onClick={onCancel}>Cancel</button>
+        <button className="btn btn--primary" onClick={() => onSave({ name, institution, type, currency, ownerUserId, isShared, openingBalance: balance })} disabled={!name.trim() || !institution.trim()}><Check size={15} /> Save</button>
+        <button className="btn" onClick={onCancel}><X size={15} /> Cancel</button>
       </div>
     </div>
   );

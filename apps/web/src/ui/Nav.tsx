@@ -4,15 +4,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
+import { Users, User, CreditCard, Briefcase, Target, Upload, Settings, Menu, LogOut } from 'react-feather';
 
 const links = [
-  { href: '/family', label: 'Family' },
-  { href: '/personal', label: 'Personal' },
-  { href: '/accounts', label: 'Accounts' },
-  { href: '/holdings', label: 'Holdings' },
-  { href: '/goals', label: 'Goals' },
-  { href: '/import', label: 'Import' },
-  { href: '/settings', label: 'Settings' },
+  { href: '/family', label: 'Family', Icon: Users },
+  { href: '/personal', label: 'Personal', Icon: User },
+  { href: '/accounts', label: 'Accounts', Icon: CreditCard },
+  { href: '/holdings', label: 'Holdings', Icon: Briefcase },
+  { href: '/goals', label: 'Goals', Icon: Target },
+  { href: '/import', label: 'Import', Icon: Upload },
+  { href: '/settings', label: 'Settings', Icon: Settings },
 ];
 
 type Props = { user: { name: string; email: string; image: string | null } };
@@ -29,17 +30,17 @@ export function Nav({ user }: Props) {
         aria-expanded={menuOpen}
         onClick={() => setMenuOpen((o) => !o)}
       >
-        ☰
+        <Menu size={18} />
       </button>
       <div className={`nav__links ${menuOpen ? 'nav__links--open' : ''}`}>
-        {links.map((l) => (
+        {links.map(({ href, label, Icon }) => (
           <Link
-            key={l.href}
-            href={l.href}
-            className={`nav__link ${path.startsWith(l.href) ? 'nav__link--active' : ''}`}
+            key={href}
+            href={href}
+            className={`nav__link ${path.startsWith(href) ? 'nav__link--active' : ''}`}
             onClick={() => setMenuOpen(false)}
           >
-            {l.label}
+            <Icon size={15} /> {label}
           </Link>
         ))}
       </div>
@@ -52,7 +53,7 @@ export function Nav({ user }: Props) {
             (user.name || user.email).slice(0, 1).toUpperCase()
           )}
         </div>
-        <button className="btn" onClick={() => signOut({ callbackUrl: '/login' })}>Sign out</button>
+        <button className="btn" onClick={() => signOut({ callbackUrl: '/login' })}><LogOut size={15} /> Sign out</button>
       </div>
     </nav>
   );

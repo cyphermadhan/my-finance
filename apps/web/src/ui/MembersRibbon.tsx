@@ -1,3 +1,4 @@
+import { Users } from 'react-feather';
 import type { Account, FamilyMember, Holding } from '@/types';
 import { formatInrCompact } from '@/util/format';
 
@@ -34,7 +35,7 @@ export function MembersRibbon({ members, accounts, holdings, usdInr }: Props) {
   return (
     <section className="card">
       <div className="section-header">
-        <h2>Members</h2>
+        <h2><Users size={16} /> Members</h2>
         <span className="section-header__meta">{members.length} in family</span>
       </div>
       <div className="member-ribbon">

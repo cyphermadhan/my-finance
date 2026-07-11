@@ -1,6 +1,7 @@
 'use client';
 
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { PieChart as PieIcon } from 'react-feather';
 import { CATEGORY_LABELS } from '@/types';
 import type { Slice } from '@/analytics/scoping';
 import { formatInrCompact, formatInrFull } from '@/util/format';
@@ -11,7 +12,7 @@ export function AllocationChart({ slices, title = 'Allocation' }: Props) {
   if (slices.length === 0) {
     return (
       <section className="card">
-        <div className="section-header"><h2>{title}</h2></div>
+        <div className="section-header"><h2><PieIcon size={16} /> {title}</h2></div>
         <p style={{ color: 'var(--text-secondary)' }}>Add holdings to see allocation.</p>
       </section>
     );
@@ -19,7 +20,7 @@ export function AllocationChart({ slices, title = 'Allocation' }: Props) {
   return (
     <section className="card">
       <div className="section-header">
-        <h2>{title}</h2>
+        <h2><PieIcon size={16} /> {title}</h2>
         <span className="section-header__meta">{slices.length} categories</span>
       </div>
       <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>

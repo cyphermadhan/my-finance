@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { Users, Home, Shield, RefreshCw, Copy, LogOut } from 'react-feather';
 import type { FamilyMember } from '@/types';
 
 type Props = {
@@ -20,7 +21,7 @@ export function SettingsClient({ family, members, viewerUserId, viewerEmail, rot
   return (
     <div className="app">
       <section className="card">
-        <div className="section-header"><h2>Family</h2></div>
+        <div className="section-header"><h2><Home size={16} /> Family</h2></div>
         {family ? (
           <>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -37,13 +38,13 @@ export function SettingsClient({ family, members, viewerUserId, viewerEmail, rot
                     else setMsg(r.error);
                   })}
                 >
-                  Rotate
+                  <RefreshCw size={14} /> Rotate
                 </button>
                 <button
                   className="btn"
                   onClick={() => { navigator.clipboard.writeText(code); setMsg('Copied.'); }}
                 >
-                  Copy
+                  <Copy size={14} /> Copy
                 </button>
               </div>
               {msg && <div className="success-msg" style={{ marginTop: 6 }}>{msg}</div>}
@@ -53,7 +54,7 @@ export function SettingsClient({ family, members, viewerUserId, viewerEmail, rot
       </section>
 
       <section className="card">
-        <div className="section-header"><h2>Members</h2></div>
+        <div className="section-header"><h2><Users size={16} /> Members</h2></div>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
           {members.map((m) => (
             <li key={m.userId} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 10, border: '1px solid var(--border)', borderRadius: 8 }}>
@@ -68,10 +69,10 @@ export function SettingsClient({ family, members, viewerUserId, viewerEmail, rot
       </section>
 
       <section className="card">
-        <div className="section-header"><h2>Account</h2></div>
+        <div className="section-header"><h2><Shield size={16} /> Account</h2></div>
         <p>Signed in as <strong>{viewerEmail}</strong>. Two-factor authentication is enabled.</p>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <a href="/mfa-enroll?reset=1" className="btn">Reset 2FA (generates new secret + backup codes)</a>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <a href="/mfa-enroll?reset=1" className="btn"><Shield size={15} /> Reset 2FA (generates new secret + backup codes)</a>
           <button
             className="btn btn--danger"
             onClick={() => {
@@ -83,7 +84,7 @@ export function SettingsClient({ family, members, viewerUserId, viewerEmail, rot
               }
             }}
           >
-            Leave family
+            <LogOut size={15} /> Leave family
           </button>
         </div>
       </section>

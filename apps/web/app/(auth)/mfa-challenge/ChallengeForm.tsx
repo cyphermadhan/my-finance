@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { Shield } from 'react-feather';
 
 type Props = {
   verify: (code: string) => Promise<{ ok: true } | { ok: false; error: string }>;
@@ -38,7 +39,7 @@ export function ChallengeForm({ verify }: Props) {
       />
       {error && <div className="error-msg">{error}</div>}
       <button type="submit" className="btn btn--primary" disabled={pending || code.length < 6}>
-        {pending ? 'Verifying…' : 'Verify'}
+        <Shield size={15} /> {pending ? 'Verifying…' : 'Verify'}
       </button>
     </form>
   );

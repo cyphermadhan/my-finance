@@ -1,3 +1,4 @@
+import { CreditCard } from 'react-feather';
 import type { DashboardData, Scope } from '@/types';
 import { Hero } from './Hero';
 import { NetWorthChart } from './NetWorthChart';
@@ -39,7 +40,7 @@ export function DashboardShell({ data }: Props) {
         <AllocationChart slices={slices} title={scope === 'family' ? 'Family allocation' : 'My allocation'} />
 
         <section className="card">
-          <div className="section-header"><h2>Accounts</h2></div>
+          <div className="section-header"><h2><CreditCard size={16} /> Accounts</h2></div>
           {acctScope.list.length === 0 ? (
             <p style={{ color: 'var(--text-secondary)' }}>No accounts yet. Import a bank statement or add one manually.</p>
           ) : (

@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { Plus, LogIn } from 'react-feather';
 import { SegmentedControl } from '@/ui/SegmentedControl';
 
 type Props = {
@@ -49,7 +50,7 @@ export function OnboardingForm({ create, join }: Props) {
           <label style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Family name</label>
           <input className="input input--text" value={name} onChange={(e) => setName(e.target.value)} placeholder="The Rajs" required />
           {error && <div className="error-msg">{error}</div>}
-          <button type="submit" className="btn btn--primary" disabled={pending || !name.trim()}>{pending ? 'Creating…' : 'Create family'}</button>
+          <button type="submit" className="btn btn--primary" disabled={pending || !name.trim()}><Plus size={15} /> {pending ? 'Creating…' : 'Create family'}</button>
         </form>
       ) : (
         <form
@@ -69,7 +70,7 @@ export function OnboardingForm({ create, join }: Props) {
             required
           />
           {error && <div className="error-msg">{error}</div>}
-          <button type="submit" className="btn btn--primary" disabled={pending || code.length < 4}>{pending ? 'Joining…' : 'Join family'}</button>
+          <button type="submit" className="btn btn--primary" disabled={pending || code.length < 4}><LogIn size={15} /> {pending ? 'Joining…' : 'Join family'}</button>
         </form>
       )}
     </div>

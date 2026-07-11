@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useRef, useTransition } from 'react';
+import { Plus, MoreHorizontal, Edit2, Trash2, Check, X, Upload, Briefcase } from 'react-feather';
 import type { Category, FamilyMember, Holding } from '@/types';
 import { CATEGORIES, CATEGORY_LABELS, CATEGORY_UNITS } from '@/types';
 import { formatInrCompact } from '@/util/format';
@@ -68,13 +69,18 @@ export function HoldingsClient(p: Props) {
     <div className="app">
       <section className="card">
         <div className="section-header">
-          <h2>Holdings</h2>
-          <SegmentedControl ariaLabel="Holdings scope" value={tab} onChange={setTab} options={SCOPE_OPTIONS} />
+          <h2><Briefcase size={16} /> Holdings</h2>
+          <div className="section-header__actions">
+            <SegmentedControl ariaLabel="Holdings scope" value={tab} onChange={setTab} options={SCOPE_OPTIONS} />
+            <button className="btn btn--primary" onClick={() => setAdding(true)} disabled={adding}>
+              <Plus size={15} /> Add
+            </button>
+          </div>
         </div>
         {orderedCats.length === 0 ? (
           <div style={{ color: 'var(--text-secondary)' }}>
             <p>No holdings yet. Add one below, or import a holdings file.</p>
-            <a className="btn" href="/import" style={{ marginTop: 8, display: 'inline-block' }}>Import holdings</a>
+            <a className="btn" href="/import" style={{ marginTop: 8 }}><Upload size={15} /> Import holdings</a>
           </div>
         ) : (
           <div className="table-wrap">
@@ -107,7 +113,7 @@ export function HoldingsClient(p: Props) {
           </div>
         )}
         <div style={{ marginTop: 12 }}>
-          <button className="btn" onClick={() => setAdding(true)} disabled={adding}>+ Add holding</button>
+          <button className="btn" onClick={() => setAdding(true)} disabled={adding}><Plus size={15} /> Add holding</button>
         </div>
         {adding && (
           <HoldingForm
@@ -198,24 +204,41 @@ function CategoryGroup({
 }
 
 function RowMenu({ onEdit, onDelete }: { onEdit: () => void; onDelete: () => void }) {
-  const [open, setOpen] = useState(false);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
+  const open = pos !== null;
+
+  function toggle() {
+    if (open) {
+      setPos(null);
+      return;
+    }
+    const r = btnRef.current?.getBoundingClientRect();
+    if (r) setPos({ top: r.bottom + 4, left: r.right });
+  }
+
   return (
     <div className="row-menu">
       <button
+        ref={btnRef}
         className="icon-btn"
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label="Row actions"
-        onClick={() => setOpen((o) => !o)}
+        onClick={toggle}
       >
-        ⋯
+        <MoreHorizontal size={16} />
       </button>
-      {open && (
+      {open && pos && (
         <>
-          <button className="row-menu__backdrop" aria-hidden tabIndex={-1} onClick={() => setOpen(false)} />
-          <div className="row-menu__menu" role="menu">
-            <button role="menuitem" className="row-menu__item" onClick={() => { setOpen(false); onEdit(); }}>Edit</button>
-            <button role="menuitem" className="row-menu__item row-menu__item--danger" onClick={() => { setOpen(false); onDelete(); }}>Delete</button>
+          <button className="row-menu__backdrop" aria-hidden tabIndex={-1} onClick={() => setPos(null)} />
+          <div className="row-menu__menu" role="menu" style={{ top: pos.top, left: pos.left }}>
+            <button role="menuitem" className="row-menu__item" onClick={() => { setPos(null); onEdit(); }}>
+              <Edit2 size={14} /> Edit
+            </button>
+            <button role="menuitem" className="row-menu__item row-menu__item--danger" onClick={() => { setPos(null); onDelete(); }}>
+              <Trash2 size={14} /> Delete
+            </button>
           </div>
         </>
       )}
@@ -324,8 +347,8 @@ function HoldingForm({
       )}
 
       <div className="holding-form__actions">
-        <button className="btn btn--primary" disabled={!name.trim() || saving} onClick={handleSave}>{saving ? 'Saving…' : 'Save'}</button>
-        <button className="btn" onClick={onCancel} disabled={saving}>Cancel</button>
+        <button className="btn btn--primary" disabled={!name.trim() || saving} onClick={handleSave}><Check size={15} /> {saving ? 'Saving…' : 'Save'}</button>
+        <button className="btn" onClick={onCancel} disabled={saving}><X size={15} /> Cancel</button>
       </div>
     </div>
   );

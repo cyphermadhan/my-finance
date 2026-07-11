@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useTransition } from 'react';
+import { UploadCloud, Upload, X } from 'react-feather';
 import { parseFile, type HoldingRow, type TransactionRow } from '@/ingest/parse';
 import { formatInrCompact } from '@/util/format';
 
@@ -54,7 +55,7 @@ export function ImportClient({ importTransactions, importHoldings }: Props) {
   return (
     <section className="card">
       <div className="section-header">
-        <h2>Upload file</h2>
+        <h2><UploadCloud size={16} /> Upload file</h2>
       </div>
       <input
         ref={fileRef}
@@ -115,8 +116,8 @@ export function ImportClient({ importTransactions, importHoldings }: Props) {
             <div className="footnote">Showing first 200 rows; full set will be imported.</div>
           )}
           <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
-            <button className="btn btn--primary" onClick={commit} disabled={pending}>{pending ? 'Importing…' : 'Confirm & import'}</button>
-            <button className="btn" onClick={() => { setParsed(null); if (fileRef.current) fileRef.current.value = ''; }}>Cancel</button>
+            <button className="btn btn--primary" onClick={commit} disabled={pending}><Upload size={15} /> {pending ? 'Importing…' : 'Confirm & import'}</button>
+            <button className="btn" onClick={() => { setParsed(null); if (fileRef.current) fileRef.current.value = ''; }}><X size={15} /> Cancel</button>
           </div>
         </>
       )}

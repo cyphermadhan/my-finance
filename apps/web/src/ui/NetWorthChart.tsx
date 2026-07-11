@@ -2,6 +2,7 @@
 
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { format } from 'date-fns';
+import { TrendingUp } from 'react-feather';
 import { formatInrCompact, formatInrFull } from '@/util/format';
 
 type Props = { data: Array<{ date: string; value: number }>; title?: string };
@@ -10,7 +11,7 @@ export function NetWorthChart({ data, title = 'Net worth over time' }: Props) {
   if (data.length < 2) {
     return (
       <section className="card">
-        <div className="section-header"><h2>{title}</h2></div>
+        <div className="section-header"><h2><TrendingUp size={16} /> {title}</h2></div>
         <p style={{ color: 'var(--text-secondary)' }}>Import a few months of history to see the trend.</p>
       </section>
     );
@@ -18,7 +19,7 @@ export function NetWorthChart({ data, title = 'Net worth over time' }: Props) {
   return (
     <section className="card">
       <div className="section-header">
-        <h2>{title}</h2>
+        <h2><TrendingUp size={16} /> {title}</h2>
         <span className="section-header__meta">{data.length} snapshots</span>
       </div>
       <div style={{ width: '100%', height: 260 }}>

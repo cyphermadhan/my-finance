@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { Shield } from 'react-feather';
 
 type Props = {
   secret: string;
@@ -45,7 +46,7 @@ export function EnrollForm({ secret, hashedBackupCodes, finalize, redirectTo = '
       />
       {error && <div className="error-msg">{error}</div>}
       <button type="submit" className="btn btn--primary" disabled={pending || code.length !== 6}>
-        {pending ? 'Verifying…' : 'Confirm & continue'}
+        <Shield size={15} /> {pending ? 'Verifying…' : 'Confirm & continue'}
       </button>
     </form>
   );

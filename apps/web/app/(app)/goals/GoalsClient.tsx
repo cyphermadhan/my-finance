@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { Target, Plus, Edit2, Trash2, Check, X } from 'react-feather';
 import type { Category, FamilyMember, Goal, Scope } from '@/types';
 import { CATEGORIES, CATEGORY_LABELS } from '@/types';
 import { formatInrCompact } from '@/util/format';
@@ -21,8 +22,8 @@ export function GoalsClient({ viewerUserId, goals, members, upsertGoal, deleteGo
     <div className="app">
       <section className="card">
         <div className="section-header">
-          <h2>Goals</h2>
-          <button className="btn" onClick={() => setEditing({ id: '', familyId: '', scope: 'family', name: '', targetInr: 0, includeCategories: [] })}>+ New goal</button>
+          <h2><Target size={16} /> Goals</h2>
+          <button className="btn btn--primary" onClick={() => setEditing({ id: '', familyId: '', scope: 'family', name: '', targetInr: 0, includeCategories: [] })}><Plus size={15} /> New goal</button>
         </div>
         {goals.length === 0 ? (
           <p style={{ color: 'var(--text-secondary)' }}>No goals yet. Create your first family or personal goal.</p>
@@ -46,8 +47,8 @@ export function GoalsClient({ viewerUserId, goals, members, upsertGoal, deleteGo
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 6 }}>
-                  <button className="btn" onClick={() => setEditing(g)}>Edit</button>
-                  <button className="btn btn--danger" onClick={() => start(() => deleteGoal(g.id).then(() => {}))}>Delete</button>
+                  <button className="btn" onClick={() => setEditing(g)}><Edit2 size={14} /> Edit</button>
+                  <button className="btn btn--danger" onClick={() => { if (confirm(`Delete goal "${g.name}"?`)) start(() => deleteGoal(g.id).then(() => {})); }}><Trash2 size={14} /> Delete</button>
                 </div>
               </li>
             ))}
@@ -97,7 +98,7 @@ function GoalEditor({
 
   return (
     <section className="card">
-      <div className="section-header"><h2>{initial.id ? 'Edit goal' : 'New goal'}</h2></div>
+      <div className="section-header"><h2><Target size={16} /> {initial.id ? 'Edit goal' : 'New goal'}</h2></div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 560 }}>
         <input className="input input--text" placeholder="Goal name" value={name} onChange={(e) => setName(e.target.value)} />
         <input className="input" type="number" placeholder="Target ₹" value={targetInr} onChange={(e) => setTargetInr(Number(e.target.value))} />
@@ -134,7 +135,7 @@ function GoalEditor({
           </div>
         </div>
         <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
-          <button className="btn" onClick={onCancel}>Cancel</button>
+          <button className="btn" onClick={onCancel}><X size={15} /> Cancel</button>
           <button
             className="btn btn--primary"
             disabled={!name.trim() || targetInr <= 0}
@@ -148,7 +149,7 @@ function GoalEditor({
               includeCategories: cats,
             })}
           >
-            Save
+            <Check size={15} /> Save
           </button>
         </div>
       </div>
