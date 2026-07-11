@@ -1,11 +1,9 @@
 'use client';
 
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
-import type { Category, Holding } from '@/types';
 import { CATEGORY_LABELS } from '@/types';
+import type { Slice } from '@/analytics/scoping';
 import { formatInrCompact, formatInrFull } from '@/util/format';
-
-type Slice = { category: Category; valueInr: number; pct: number };
 
 type Props = { slices: Slice[]; title?: string };
 
@@ -59,19 +57,4 @@ export function AllocationChart({ slices, title = 'Allocation' }: Props) {
       </div>
     </section>
   );
-}
-
-/** Pure helper — computes slices from a set of holdings + fx. */
-export function slicesFromHoldings(holdings: Holding[], usdInr: number, weightFn?: (h: Holding) => number): Slice[] {
-  const totals = new Map<Category, number>();
-  for (const h of holdings) {
-    if (h.category === 'liability') continue;
-    const inr = h.currency === 'USD' ? h.latestValue * usdInr : h.latestValue;
-    const w = weightFn ? weightFn(h) : 1;
-    totals.set(h.category, (totals.get(h.category) ?? 0) + inr * w);
-  }
-  const sum = Array.from(totals.values()).reduce((a, b) => a + b, 0);
-  return Array.from(totals.entries())
-    .map(([category, valueInr]) => ({ category, valueInr, pct: sum > 0 ? (valueInr / sum) * 100 : 0 }))
-    .sort((a, b) => b.valueInr - a.valueInr);
 }

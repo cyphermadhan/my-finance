@@ -1,7 +1,24 @@
-import type { Account, Currency, Holding, Scope } from '@/types';
+import type { Account, Category, Currency, Holding, Scope } from '@/types';
+
+export type Slice = { category: Category; valueInr: number; pct: number };
 
 function toInr(value: number, currency: Currency, usdInr: number): number {
   return currency === 'USD' ? value * usdInr : value;
+}
+
+/** Pure helper — computes allocation slices from a set of holdings + fx. Server-safe. */
+export function slicesFromHoldings(holdings: Holding[], usdInr: number, weightFn?: (h: Holding) => number): Slice[] {
+  const totals = new Map<Category, number>();
+  for (const h of holdings) {
+    if (h.category === 'liability') continue;
+    const inr = h.currency === 'USD' ? h.latestValue * usdInr : h.latestValue;
+    const w = weightFn ? weightFn(h) : 1;
+    totals.set(h.category, (totals.get(h.category) ?? 0) + inr * w);
+  }
+  const sum = Array.from(totals.values()).reduce((a, b) => a + b, 0);
+  return Array.from(totals.entries())
+    .map(([category, valueInr]) => ({ category, valueInr, pct: sum > 0 ? (valueInr / sum) * 100 : 0 }))
+    .sort((a, b) => b.valueInr - a.valueInr);
 }
 
 /** For a personal view: shared items are counted at 1/N; owned items at 100%. */

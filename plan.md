@@ -253,7 +253,7 @@ Flow:
 
 ## Open questions before I start coding
 
-1. **Domain** — do you already own one? What's the FQDN, and is DNS at Cloudflare or elsewhere?
+1. **Domain** — ✅ Resolved: FQDN is `wealth.arknet.click` (root domain `arknet.click` owned by user, DNS at Cloudflare). Production `AUTH_URL=https://wealth.arknet.click`.
 2. **Neon project** — provisioned already? If yes, do you want me to write against a dev branch or main?
 3. **Google OAuth client** — I'll include a walkthrough in README; ok?
 4. **Family size** — 2 members? 4? 8? Just so nav/dashboard density fits.

@@ -1,9 +1,9 @@
 import type { DashboardData, Scope } from '@/types';
 import { Hero } from './Hero';
 import { NetWorthChart } from './NetWorthChart';
-import { AllocationChart, slicesFromHoldings } from './AllocationChart';
+import { AllocationChart } from './AllocationChart';
 import { MembersRibbon } from './MembersRibbon';
-import { netWorthScoped, scopeAccounts, scopeHoldings } from '@/analytics/scoping';
+import { netWorthScoped, scopeAccounts, scopeHoldings, slicesFromHoldings } from '@/analytics/scoping';
 
 type Props = { data: DashboardData };
 
