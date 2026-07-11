@@ -19,7 +19,7 @@ export default async function ImportPage() {
           <strong style={{ color: 'var(--text-primary)' }}>Column guide</strong>
           <ul style={{ margin: '8px 0 0', paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 5 }}>
             <li>
-              <b style={{ color: 'var(--text-primary)' }}>date</b> — the statement&rsquo;s <b>&ldquo;as of&rdquo; date</b> (e.g. 2024-03-31): the date these values are true. <b>Not the purchase date.</b> Your yearly statement&rsquo;s own date is exactly this — import one per period and your net-worth history is built from these dates.
+              <b style={{ color: 'var(--text-primary)' }}>date</b> — the date these values are true (the statement&rsquo;s <b>&ldquo;as of&rdquo; date</b>). For a current statement use <b>today&rsquo;s date</b>, the same date on every row. <b>Not the purchase date.</b> Re-import periodically and your net-worth trend builds from these dates over time.
             </li>
             <li><b style={{ color: 'var(--text-primary)' }}>category</b> — e.g. mutual_funds, indian_stocks, us_stocks, gold, real_estate, cash…</li>
             <li><b style={{ color: 'var(--text-primary)' }}>name</b> — the holding&rsquo;s name</li>
