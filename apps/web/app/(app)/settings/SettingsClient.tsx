@@ -71,7 +71,7 @@ export function SettingsClient({ family, members, viewerUserId, viewerEmail, rot
         <div className="section-header"><h2>Account</h2></div>
         <p>Signed in as <strong>{viewerEmail}</strong>. Two-factor authentication is enabled.</p>
         <div style={{ display: 'flex', gap: 8 }}>
-          <a href="/mfa-enroll" className="btn">Reset 2FA (generates new secret + backup codes)</a>
+          <a href="/mfa-enroll?reset=1" className="btn">Reset 2FA (generates new secret + backup codes)</a>
           <button
             className="btn btn--danger"
             onClick={() => {

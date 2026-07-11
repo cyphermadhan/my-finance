@@ -7,9 +7,10 @@ type Props = {
   secret: string;
   hashedBackupCodes: string[];
   finalize: (input: { secret: string; hashedBackupCodes: string[]; code: string }) => Promise<{ ok: true } | { ok: false; error: string }>;
+  redirectTo?: string;
 };
 
-export function EnrollForm({ secret, hashedBackupCodes, finalize }: Props) {
+export function EnrollForm({ secret, hashedBackupCodes, finalize, redirectTo = '/onboarding' }: Props) {
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -26,7 +27,7 @@ export function EnrollForm({ secret, hashedBackupCodes, finalize }: Props) {
             setError(res.error);
             return;
           }
-          router.replace('/onboarding');
+          router.replace(redirectTo);
         });
       }}
       style={{ display: 'flex', flexDirection: 'column', gap: 12 }}

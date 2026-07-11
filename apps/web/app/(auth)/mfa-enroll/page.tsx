@@ -4,9 +4,15 @@ import { redirect } from 'next/navigation';
 import { finalizeMfaEnroll } from '@/actions/mfa';
 import { EnrollForm } from './EnrollForm';
 
-export default async function MfaEnrollPage() {
+export default async function MfaEnrollPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const session = await requireSession();
-  if (session.user.mfaEnabled) redirect('/');
+  const isReset = searchParams?.reset === '1';
+  // Block re-entry during normal onboarding, but allow an explicit reset from Settings.
+  if (session.user.mfaEnabled && !isReset) redirect('/');
 
   // Generate secret + codes fresh for this render. The form embeds them and submits back to
   // finalizeMfaEnroll which requires the user to prove they can generate a valid TOTP first.
@@ -19,9 +25,10 @@ export default async function MfaEnrollPage() {
   return (
     <main className="auth-shell">
       <div className="auth-card">
-        <div className="auth-brand">Wealth · Setup</div>
-        <h1>Enable two-factor</h1>
+        <div className="auth-brand">Wealth · {isReset ? 'Reset' : 'Setup'}</div>
+        <h1>{isReset ? 'Reset two-factor' : 'Enable two-factor'}</h1>
         <p>
+          {isReset && 'This replaces your current authenticator and backup codes. Your old codes stop working once you confirm below. '}
           Scan the QR code with Google Authenticator (or 1Password / Authy). Then enter the 6-digit code shown in the app to confirm.
         </p>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -41,7 +48,7 @@ export default async function MfaEnrollPage() {
           </div>
         </div>
 
-        <EnrollForm secret={secret} hashedBackupCodes={hashed} finalize={finalizeMfaEnroll} />
+        <EnrollForm secret={secret} hashedBackupCodes={hashed} finalize={finalizeMfaEnroll} redirectTo={isReset ? '/settings' : '/onboarding'} />
       </div>
     </main>
   );
