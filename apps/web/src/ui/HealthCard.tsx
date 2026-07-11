@@ -1,4 +1,4 @@
-import { Activity, CheckCircle, Info } from 'react-feather';
+import { Activity, CheckCircle, Info, ChevronDown } from 'react-feather';
 import type { PortfolioHealth } from '@/analytics/health';
 import { formatInrCompact } from '@/util/format';
 
@@ -37,16 +37,26 @@ export function HealthCard({ health }: { health: PortfolioHealth }) {
           <div className="health__score-num">{health.score}</div>
           <div className="health__score-grade">{health.grade} · {GRADE_LABEL[health.grade]}</div>
         </div>
-        <div className="health__dims">
-          {health.dimensions.map((d) => (
-            <div key={d.key} className="health__dim">
-              <div className="health__dim-head">
-                <span>{d.label}</span>
-                <span className="health__dim-detail">{d.detail}</span>
-              </div>
-              <div className="health__bar"><div className="health__bar-fill" style={{ width: `${d.score}%` }} /></div>
+        <div className="health__summary">
+          <p className="health__summary-note">Averaged from six allocation checks on your family holdings.</p>
+          <details className="health__details">
+            <summary className="btn health__toggle">
+              <ChevronDown size={15} />
+              <span className="health__toggle-closed">View details</span>
+              <span className="health__toggle-open">Hide details</span>
+            </summary>
+            <div className="health__dims">
+              {health.dimensions.map((d) => (
+                <div key={d.key} className="health__dim">
+                  <div className="health__dim-head">
+                    <span>{d.label}</span>
+                    <span className="health__dim-detail">{d.detail}</span>
+                  </div>
+                  <div className="health__bar"><div className="health__bar-fill" style={{ width: `${d.score}%` }} /></div>
+                </div>
+              ))}
             </div>
-          ))}
+          </details>
         </div>
       </div>
 

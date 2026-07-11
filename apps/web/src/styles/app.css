@@ -820,3 +820,16 @@
 @media (max-width: 640px) {
   .info-tip__bubble { max-width: 78vw; }
 }
+
+/* --- Portfolio health: View details disclosure --- */
+.health__summary { flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.health__summary-note { font-size: 13px; color: var(--text-secondary); margin: 0; }
+.health__details { width: 100%; }
+.health__toggle { list-style: none; cursor: pointer; }
+.health__toggle::-webkit-details-marker { display: none; }
+.health__toggle svg { transition: transform 150ms ease; }
+.health__details[open] .health__toggle svg { transform: rotate(180deg); }
+.health__toggle-open { display: none; }
+.health__details[open] .health__toggle-closed { display: none; }
+.health__details[open] .health__toggle-open { display: inline; }
+.health__details > .health__dims { margin-top: 14px; }
