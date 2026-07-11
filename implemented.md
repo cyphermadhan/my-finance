@@ -1,5 +1,15 @@
 # Implementation Log
 
+## 2026-07-11 — Holdings overhaul + mobile pass
+
+- **What:** Reworked the Holdings model/UX (remove ticker, per-category units, member-level sharing, read-only rows + row menu), simplified import, and made the whole app responsive.
+- **Files:** `src/types.ts`, `src/db/schema.ts`, `src/db/queries.ts`, `src/analytics/scoping.ts`, `src/actions/holdings.ts`, `src/actions/import.ts`, `src/ingest/{parse,templates}.ts`, `app/(app)/holdings/HoldingsClient.tsx`, `app/(app)/{accounts,import}/*`, `src/ui/{MembersRibbon,Nav}.tsx`, `src/styles/app.css`, `app/layout.tsx`
+- **Details:**
+  - New `holding_shared_with` join table + `sharedWith[]` on Holding; "Shared" now takes a member multi-select and splits value 1/|set| in each member's Mine view. `drizzle-kit push --force` also dropped `holding.ticker`.
+  - `CATEGORY_UNITS` map drives a unit-aware quantity field (gold→grams, stocks→shares, real estate→acres; cash/PPF/EPF/etc. have none). Holdings rows are read-only with a ⋯ Edit/Delete menu; edit opens an inline form.
+  - Import dropped `owner_email` (defaults to importer); templates are now header + one empty row. Empty-state copy fixed + Import buttons added.
+  - Responsive: hamburger nav, holdings table reflows to cards ≤640px, single-column dashboard, stacked forms; explicit `viewport` export.
+
 ## 2026-07-11 — Fix RSC boundary crash on family/personal dashboard
 
 - **What:** Fixed a production-only `TypeError: c is not a function` that crashed the dashboard render after creating/joining a family.
