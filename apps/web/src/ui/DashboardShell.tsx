@@ -41,14 +41,12 @@ export function DashboardShell({ data }: Props) {
         <MembersRibbon members={familyMembers} accounts={accounts} holdings={holdings} usdInr={latestFx.usdInr} />
       )}
 
-      <div className="grid-two">
-        <AllocationChart slices={slices} title={scope === 'family' ? 'Family allocation' : 'My allocation'} />
+      {acctScope.list.length > 0 ? (
+        <div className="grid-two">
+          <AllocationChart slices={slices} title={scope === 'family' ? 'Family allocation' : 'My allocation'} />
 
-        <section className="card">
-          <div className="section-header"><h2><CreditCard size={16} /> Accounts</h2></div>
-          {acctScope.list.length === 0 ? (
-            <p style={{ color: 'var(--text-secondary)' }}>No accounts yet. Import a bank statement or add one manually.</p>
-          ) : (
+          <section className="card">
+            <div className="section-header"><h2><CreditCard size={16} /> Accounts</h2></div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {acctScope.list.map((a) => {
                 const v = acctInr(a.latestBalance, a.currency) * acctScope.sharedFactor(a);
@@ -60,9 +58,11 @@ export function DashboardShell({ data }: Props) {
                 );
               })}
             </ul>
-          )}
-        </section>
-      </div>
+          </section>
+        </div>
+      ) : (
+        <AllocationChart slices={slices} title={scope === 'family' ? 'Family allocation' : 'My allocation'} />
+      )}
     </div>
   );
 }
