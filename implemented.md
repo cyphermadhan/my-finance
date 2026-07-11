@@ -1,5 +1,14 @@
 # Implementation Log
 
+## 2026-07-11 — UI polish: menus, nav blur, Feather icons
+
+- **What:** Fixed row-menu clipping/transparency, added nav backdrop-blur, a header Add button, removed button underlines, and added Feather icons across the app.
+- **Files:** `src/ui/Nav.tsx`, `src/styles/app.css`, `app/(app)/holdings/HoldingsClient.tsx`, `app/(app)/{accounts,goals,import,settings}/*`, `src/ui/{DashboardShell,MembersRibbon,NetWorthChart,AllocationChart}.tsx`, auth forms; added `react-feather` dep.
+- **Details:**
+  - Row menu now uses **fixed positioning** (escapes table `overflow` clipping) with a solid `--bg-surface-alt` + blur background — the `--bg-surface` token is intentionally translucent (`#17171466`), which was the transparency cause.
+  - Sticky nav got `backdrop-filter: blur(16px)`; `.btn` got `text-decoration: none`.
+  - Done on branch `holdings-polish`, pushed to GitHub, then fast-forward merged to `main` (branch kept).
+
 ## 2026-07-11 — Holdings overhaul + mobile pass
 
 - **What:** Reworked the Holdings model/UX (remove ticker, per-category units, member-level sharing, read-only rows + row menu), simplified import, and made the whole app responsive.
