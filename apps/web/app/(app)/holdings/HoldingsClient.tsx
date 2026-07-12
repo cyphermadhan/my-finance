@@ -119,6 +119,7 @@ export function HoldingsClient(p: Props) {
         {adding && (
           <Modal title="Add holding" onClose={() => setAdding(false)} maxWidth={560}>
             <HoldingForm
+              bare
               members={p.members}
               defaultOwner={p.viewerUserId}
               onSave={async (v) => {
@@ -255,12 +256,15 @@ function HoldingForm({
   initial,
   onSave,
   onCancel,
+  bare = false,
 }: {
   members: FamilyMember[];
   defaultOwner: string;
   initial?: Holding;
   onSave: (v: UpsertInput) => Promise<void>;
   onCancel: () => void;
+  /** Drop the bordered container chrome (used when rendered inside a modal). */
+  bare?: boolean;
 }) {
   const [name, setName] = useState(initial?.name ?? '');
   const [category, setCategory] = useState<Category>(initial?.category ?? 'cash');
@@ -302,7 +306,7 @@ function HoldingForm({
   }
 
   return (
-    <div className="holding-form">
+    <div className={`holding-form ${bare ? 'holding-form--bare' : ''}`}>
       <div className="holding-form__fields">
         <input className="input input--text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
         <select className="select" value={category} onChange={(e) => setCategory(e.target.value as Category)}>
