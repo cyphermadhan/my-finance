@@ -32,6 +32,15 @@ export function DashboardShell({ data }: Props) {
 
   return (
     <div className="app">
+      {scope === 'family' && (
+        <section className="hero-banner">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/hero-image.webp" alt="" className="hero-banner__img" />
+          <div className="hero-banner__overlay">
+            <p className="hero-banner__quote">Let&rsquo;s build wealth together.</p>
+          </div>
+        </section>
+      )}
       <Hero label={label} value={nw} />
       <NetWorthChart data={historicalScoped} title={scope === 'family' ? 'Family net worth over time' : 'My net worth over time'} />
 
