@@ -5,6 +5,7 @@ import { Target, Plus, Edit2, Trash2, Check, X } from 'react-feather';
 import type { Category, FamilyMember, Goal, Scope } from '@/types';
 import { CATEGORIES, CATEGORY_LABELS } from '@/types';
 import { formatInrCompact } from '@/util/format';
+import { Modal } from '@/ui/Modal';
 
 type Props = {
   viewerUserId: string;
@@ -57,16 +58,18 @@ export function GoalsClient({ viewerUserId, goals, members, upsertGoal, deleteGo
       </section>
 
       {editing && (
-        <GoalEditor
-          initial={editing}
-          members={members}
-          viewerUserId={viewerUserId}
-          onCancel={() => setEditing(null)}
-          onSave={async (g) => {
-            await upsertGoal(g);
-            setEditing(null);
-          }}
-        />
+        <Modal title={editing.id ? 'Edit goal' : 'New goal'} onClose={() => setEditing(null)} maxWidth={560}>
+          <GoalEditor
+            initial={editing}
+            members={members}
+            viewerUserId={viewerUserId}
+            onCancel={() => setEditing(null)}
+            onSave={async (g) => {
+              await upsertGoal(g);
+              setEditing(null);
+            }}
+          />
+        </Modal>
       )}
     </div>
   );
@@ -97,9 +100,7 @@ function GoalEditor({
   }
 
   return (
-    <section className="card">
-      <div className="section-header"><h2><Target size={16} /> {initial.id ? 'Edit goal' : 'New goal'}</h2></div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 560 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <input className="input input--text" placeholder="Goal name" value={name} onChange={(e) => setName(e.target.value)} />
         <input className="input" type="number" placeholder="Target ₹" value={targetInr} onChange={(e) => setTargetInr(Number(e.target.value))} />
         <div style={{ display: 'flex', gap: 8 }}>
@@ -153,6 +154,5 @@ function GoalEditor({
           </button>
         </div>
       </div>
-    </section>
   );
 }

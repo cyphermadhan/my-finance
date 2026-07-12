@@ -6,6 +6,7 @@ import type { Category, FamilyMember, Holding } from '@/types';
 import { CATEGORIES, CATEGORY_LABELS, CATEGORY_UNITS } from '@/types';
 import { formatInrCompact } from '@/util/format';
 import { SegmentedControl } from '@/ui/SegmentedControl';
+import { Modal } from '@/ui/Modal';
 
 const SCOPE_OPTIONS = [
   { value: 'family' as const, label: 'Family' },
@@ -116,15 +117,17 @@ export function HoldingsClient(p: Props) {
           <button className="btn" onClick={() => setAdding(true)} disabled={adding}><Plus size={15} /> Add holding</button>
         </div>
         {adding && (
-          <HoldingForm
-            members={p.members}
-            defaultOwner={p.viewerUserId}
-            onSave={async (v) => {
-              await p.upsertHolding(v);
-              setAdding(false);
-            }}
-            onCancel={() => setAdding(false)}
-          />
+          <Modal title="Add holding" onClose={() => setAdding(false)} maxWidth={560}>
+            <HoldingForm
+              members={p.members}
+              defaultOwner={p.viewerUserId}
+              onSave={async (v) => {
+                await p.upsertHolding(v);
+                setAdding(false);
+              }}
+              onCancel={() => setAdding(false)}
+            />
+          </Modal>
         )}
       </section>
     </div>
